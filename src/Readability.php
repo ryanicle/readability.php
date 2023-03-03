@@ -2207,7 +2207,13 @@ class Readability
                     } else {
                         $this->logger->debug(sprintf('[PostProcess] Converting link to absolute URI: \'%s\'', substr($href, 0, 128)));
 
-                        $link->setAttribute('href', $this->toAbsoluteURI($href));
+                        try {
+                            $absoluteURL = $this->toAbsoluteURI($href);
+                        } catch (\Exception $err) {
+                            $this->logger->debug('[PostProcess] Invalid URL encountered');
+                            $absoluteURL = '';
+                        }
+                        $link->setAttribute('href', $absoluteURL);
                     }
                 }
             }
