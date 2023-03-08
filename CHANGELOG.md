@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v3.1.4](https://github.com/fivefilters/readability.php/releases/tag/v3.1.4)
+- Fixes improper use of null coalescing operator - reported by @thedf
+
 ## [v3.1.3](https://github.com/fivefilters/readability.php/releases/tag/v3.1.3)
 - Fixes issue where exception was thrown when resolving an invalid relative URL (when setFixRelativeURLs(true)) - reported by @jeffbotw
 
