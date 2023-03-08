@@ -1511,7 +1511,7 @@ class Readability
 
         /* @var DOMElement $sibling */
         // Can't foreach here because down there we might change the tag name and that causes the foreach to skip items
-        for ($i = 0; $i < $siblings->length ?? 0; $i++) {
+        for ($i = 0; $i < ($siblings->length ?? 0); $i++) {
             $sibling = $siblings[$i];
             $append = false;
 
