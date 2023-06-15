@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v3.1.6](https://github.com/fivefilters/readability.php/releases/tag/v3.1.6)
+- Avoid re-parsing source HTML when making multiple attempts to identify content in parse()
+
 ## [v3.1.5](https://github.com/fivefilters/readability.php/releases/tag/v3.1.5)
 - Allow psr/log version 2.x and 3.x - thanks to @piotrek-r and @ArondeParon
 
