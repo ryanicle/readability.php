@@ -8,7 +8,7 @@ use fivefilters\Readability\Nodes\DOM\DOMNode;
 use fivefilters\Readability\Nodes\DOM\DOMText;
 use fivefilters\Readability\Nodes\NodeUtility;
 use Psr\Log\LoggerInterface;
-use \Masterminds\HTML5;
+use Masterminds\HTML5;
 use League\Uri\Http;
 use League\Uri\UriResolver;
 
@@ -164,17 +164,29 @@ class Readability
     /**
      * Main parse function.
      *
-     * @param $html
+     * @param $html|null
      *
      * @throws ParseException
      *
      * @return bool
      */
-    public function parse($html)
+    public function parse(?string $html = null)
     {
         $this->logger->info('*** Starting parse process...');
 
-        $this->dom = $this->loadHTML($html);
+        if (isset($html)) {
+            $this->loadHTML($html);
+        }
+
+        // Unwrap image from noscript
+        $this->unwrapNoscriptImages($this->dom);
+
+        // Extract JSON-LD metadata before removing scripts
+        $this->jsonld = $this->configuration->getDisableJSONLD() ? [] : $this->getJSONLD($this->dom);
+
+        $this->removeScripts($this->dom);
+
+        $this->prepDocument($this->dom);
 
         // Checking for minimum HTML to work with.
         if (!($root = $this->dom->getElementsByTagName('body')->item(0)) || !$root->firstChild) {
@@ -183,15 +195,18 @@ class Readability
             throw new ParseException('Invalid or incomplete HTML.');
         }
 
+        $bodyCache = $root->cloneNode(true);
+
         $this->getMetadata();
 
         $this->getMainImage();
 
         while (true) {
-            $this->logger->debug('Starting parse loop');
-            $root = $root->firstChild;
 
-            $elementsToScore = $this->getNodes($root);
+            $this->logger->debug('Starting parse loop');
+            //$root = $root->firstChild;
+
+            $elementsToScore = $this->getNodes($root->firstChild);
             $this->logger->debug(sprintf('Elements to score: \'%s\'', count($elementsToScore)));
 
             $result = $this->rateNodes($elementsToScore);
@@ -209,8 +224,8 @@ class Readability
             $this->logger->info(sprintf('[Parsing] Article parsed. Amount of words: %s. Current threshold is: %s', $length, $this->configuration->getCharThreshold()));
 
             if ($result && $length < $this->configuration->getCharThreshold()) {
-                $this->dom = $this->loadHTML($html);
-                $root = $this->dom->getElementsByTagName('body')->item(0);
+                $root->parentNode->replaceChild($bodyCache, $root);
+                $root = $bodyCache;
 
                 if ($this->configuration->getStripUnlikelyCandidates()) {
                     $this->logger->debug('[Parsing] Threshold not met, trying again setting StripUnlikelyCandidates as false');
@@ -284,10 +299,8 @@ class Readability
      * objects and ruining the backup.
      *
      * @param string $html
-     *
-     * @return DOMDocument
      */
-    private function loadHTML($html)
+    public function loadHTML(string $html)
     {
         $this->logger->debug('[Loading] Loading HTML...');
 
@@ -336,19 +349,9 @@ class Readability
         }
         $dom->encoding = 'UTF-8';
 
-        // Unwrap image from noscript
-        $this->unwrapNoscriptImages($dom);
-
-        // Extract JSON-LD metadata before removing scripts
-        $this->jsonld = $this->configuration->getDisableJSONLD() ? [] : $this->getJSONLD($dom);
-
-        $this->removeScripts($dom);
-
-        $this->prepDocument($dom);
-
         $this->logger->debug('[Loading] Loaded HTML successfully.');
 
-        return $dom;
+        $this->dom = $dom;
     }
 
     /**
@@ -1146,7 +1149,7 @@ class Readability
             // var tmp = doc.createElement("div");
             // tmp.innerHTML = noscript.innerHTML;
             $tmp = $noscript->cloneNode(true);
-            $dom->importNode($tmp);
+            //$dom->importNode($tmp); // Isn't this node already from the $dom?
             if (!$this->isSingleImage($tmp)) {
                 return;
             }
@@ -2319,10 +2322,15 @@ class Readability
 
     /**
      * @return DOMDocument|null
+     * @param bool $contentOnly
      */
-    public function getDOMDocument()
+    public function getDOMDocument(bool $contentOnly = true)
     {
-        return $this->content;
+        if ($contentOnly) {
+            return $this->content;
+        } else {
+            return $this->dom;
+        }
     }
 
     /**
