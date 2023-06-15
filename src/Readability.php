@@ -359,9 +359,9 @@ class Readability
      * For now, only Schema.org objects of type Article or its subtypes are supported.
      *
      * @param DOMDocument $dom
-     * @return Object with any metadata that could be extracted (possibly none)
+     * @return array with any metadata that could be extracted (possibly none)
      */
-    private function getJSONLD(DOMDocument $dom)
+    private function getJSONLD(DOMDocument $dom): array
     {
         $scripts = $this->_getAllNodesWithTag($dom, ['script']);
 
