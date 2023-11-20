@@ -1,8 +1,8 @@
 <?php
 
-namespace fivefilters\Readability\Nodes\DOM;
+namespace ryanicle\Readability\Nodes\DOM;
 
-use fivefilters\Readability\Nodes\NodeTrait;
+use ryanicle\Readability\Nodes\NodeTrait;
 
 class DOMDocument extends \DOMDocument
 {

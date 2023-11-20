@@ -2,10 +2,10 @@
 
 namespace fivefilters\Readability\Nodes;
 
-use fivefilters\Readability\Nodes\DOM\DOMDocument;
-use fivefilters\Readability\Nodes\DOM\DOMElement;
-use fivefilters\Readability\Nodes\DOM\DOMNode;
-use fivefilters\Readability\Nodes\DOM\DOMNodeList;
+use ryanicle\Readability\Nodes\DOM\DOMDocument;
+use ryanicle\Readability\Nodes\DOM\DOMElement;
+use ryanicle\Readability\Nodes\DOM\DOMNode;
+use ryanicle\Readability\Nodes\DOM\DOMNodeList;
 
 /**
  * Class NodeUtility.
