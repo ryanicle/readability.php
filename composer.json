@@ -42,5 +42,6 @@
     },
     "suggest": {
         "monolog/monolog": "Allow logging debug information"
-    }
+    },
+    "minimum-stability": "dev"
 }
