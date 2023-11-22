@@ -1,6 +1,6 @@
 <?php
 
-namespace fivefilters\Readability\Nodes;
+namespace ryanicle\Readability\Nodes;
 
 use ryanicle\Readability\Nodes\DOM\DOMDocument;
 use ryanicle\Readability\Nodes\DOM\DOMElement;
