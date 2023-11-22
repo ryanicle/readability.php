@@ -1,12 +1,12 @@
 <?php
 
-namespace fivefilters\Readability;
+namespace ryanicle\Readability;
 
-use fivefilters\Readability\Nodes\DOM\DOMDocument;
-use fivefilters\Readability\Nodes\DOM\DOMElement;
-use fivefilters\Readability\Nodes\DOM\DOMNode;
-use fivefilters\Readability\Nodes\DOM\DOMText;
-use fivefilters\Readability\Nodes\NodeUtility;
+use ryanicle\Readability\Nodes\DOM\DOMDocument;
+use ryanicle\Readability\Nodes\DOM\DOMElement;
+use ryanicle\Readability\Nodes\DOM\DOMNode;
+use ryanicle\Readability\Nodes\DOM\DOMText;
+use ryanicle\Readability\Nodes\NodeUtility;
 use Psr\Log\LoggerInterface;
 use Masterminds\HTML5;
 use League\Uri\Http;

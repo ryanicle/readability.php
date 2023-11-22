@@ -1,7 +1,8 @@
 {
-    "name": "fivefilters/readability.php",
+    "name": "ryanicle/readability.php",
     "type": "library",
     "description": "A PHP port of Readability.js",
+    "version": "dev-master",
     "keywords": ["readability", "html"],
     "homepage": "https://github.com/fivefilters/readability.php",
     "license": "Apache-2.0",
@@ -20,20 +21,20 @@
     ],
     "autoload": {
         "psr-4": {
-            "fivefilters\\Readability\\": "src/"
+            "ryanicle\\Readability\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": {"fivefilters\\Readability\\Test\\": "test"}
+        "psr-4": {"ryanicle\\Readability\\Test\\": "test"}
     },
     "require": {
         "php": ">=7.4.0",
         "ext-dom": "*",
         "ext-xml": "*",
         "ext-mbstring": "*",
-        "psr/log": "^1.0 || ^2.0 || ^3.0",
+        "psr/log": "^1.0 || ^2.0 || ^3.0 || ^4.0 || ^5.0",
         "masterminds/html5": "^2.0",
-        "league/uri": "~6.7.2"
+        "league/uri": "~7"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
@@ -41,5 +42,6 @@
     },
     "suggest": {
         "monolog/monolog": "Allow logging debug information"
-    }
+    },
+    "minimum-stability": "dev"
 }
