@@ -2,7 +2,6 @@
     "name": "ryanicle/readability.php",
     "type": "library",
     "description": "A PHP port of Readability.js",
-    "version": "dev-master",
     "keywords": ["readability", "html"],
     "homepage": "https://github.com/fivefilters/readability.php",
     "license": "Apache-2.0",
